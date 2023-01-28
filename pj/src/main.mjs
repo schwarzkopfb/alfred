@@ -17,6 +17,20 @@ try {
   displayError("Clipboard content is not valid JSON");
 }
 
+function getType(value) {
+  const type = typeof value;
+
+  if (type === "object") {
+    if (Array.isArray(value)) {
+      return "array";
+    } else if (value === null) {
+      return "null";
+    }
+  }
+
+  return type;
+}
+
 function getAutocomplete(path, key) {
   const isInteger = Number.isInteger(parseInt(key));
   const useBrackets = isInteger || !RX_PURE_KEY.test(key);
@@ -51,7 +65,7 @@ function displayValue(value, path) {
   if (typeof value === "object") {
     displayKeys(value, path);
   } else {
-    const type = typeof value;
+    const type = getType(value);
     displayItems([
       createItem(value, type, path, true, value, "copy"),
     ]);
@@ -61,7 +75,7 @@ function displayValue(value, path) {
 function displayKeys(obj, path) {
   displayItems(
     Object.entries(obj).map(([k, v]) =>
-      createItem(k, typeof v, getAutocomplete(path, k), false)
+      createItem(k, getType(v), getAutocomplete(path, k), false)
     ),
   );
 }
