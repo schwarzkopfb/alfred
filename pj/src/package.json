@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "lodash.get": "^4.4.2"
+  },
+  "kis/kecske": {
+    "kis": [
+      { "lodash.get": "very good" }
+    ]
+  }
+}
