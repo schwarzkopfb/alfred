@@ -4,7 +4,7 @@ Some of my Alfred.app custom workflows
 ## pj
 Parse and explore JSON data from clipboard without leaving Alfred
 
-![demo](./img/pj.gif)
+![demo](./img/pj2.gif)
 
 ### How does it work?
 
@@ -13,4 +13,4 @@ Parse and explore JSON data from clipboard without leaving Alfred
 * Hold Cmd ⌘ to copy the property path insted of the value.
 
 ### Requirements
-* [zx](https://github.com/google/zx) installed ([with homebrew](https://formulae.brew.sh/formula/zx))
+* [zx](https://github.com/google/zx) installed [with homebrew](https://formulae.brew.sh/formula/zx)
