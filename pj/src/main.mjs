@@ -17,6 +17,10 @@ try {
   displayError("Clipboard content is not valid JSON");
 }
 
+function isEmptyObject(obj) {
+  return Object.keys(obj).length === 0;
+}
+
 function getType(value) {
   const type = typeof value;
 
@@ -114,7 +118,13 @@ function displayValue(value, path) {
   const type = getType(value);
 
   if (type === "object" || type === "array") {
-    displayKeys(value, path);
+    if (type === "array" && value.length === 0) {
+      displayEmptyArray();
+    } else if (type === "object" && isEmptyObject(value)) {
+      displayEmptyObject();
+    } else {
+      displayKeys(value, path);
+    }
   } else {
     value = formatValue(value, type);
 
@@ -149,6 +159,32 @@ function displayKeys(obj, path) {
 
 function displayItems(items) {
   console.log(JSON.stringify({ items }));
+}
+
+function displayEmptyArray() {
+  displayItems([
+    createItem(
+      "Empty",
+      "Array (length: 0)",
+      undefined,
+      false,
+      undefined,
+      "array",
+    ),
+  ]);
+}
+
+function displayEmptyObject() {
+  displayItems([
+    createItem(
+      "Empty",
+      "Object (keys: 0)",
+      undefined,
+      false,
+      undefined,
+      "object",
+    ),
+  ]);
 }
 
 function displayError(message) {
