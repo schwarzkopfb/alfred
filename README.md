@@ -7,5 +7,4 @@ Parse and explore JSON data from clipboard without leaving Alfred
 ![demo](./img/pj.gif)
 
 ### Requirements
-* node.js
-* google/zx installed globally
+* [zx](https://github.com/google/zx) installed ([with homebrew](https://formulae.brew.sh/formula/zx))

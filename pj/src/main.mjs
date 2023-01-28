@@ -1,4 +1,4 @@
-#!/Users/schwarzkopfb/.nvm/versions/node/v18.12.1/bin/node /Users/schwarzkopfb/.nvm/versions/node/v18.12.1/bin/zx
+#!/usr/bin/env zx
 $.verbose = false;
 
 import get from "lodash.get";
@@ -31,6 +31,48 @@ function getType(value) {
   return type;
 }
 
+function getIcon(type) {
+  switch (type) {
+    case "string":
+      return "string";
+    case "number":
+      return "number";
+    case "boolean":
+      return "bool";
+    case "null":
+      return "null";
+    case "array":
+      return "array";
+    case "object":
+    default:
+      return "object";
+  }
+}
+
+function formatValue(value, type) {
+  if (type === "string") {
+    return `"${value}"`;
+  } else if (type === "boolean") {
+    return value ? "true" : "false";
+  } else {
+    return value;
+  }
+}
+
+function getSubtitle(value, type) {
+  if (type === "array") {
+    return `Array (length: ${value.length})`;
+  } else if (type === "object") {
+    return `Object (keys: ${Object.keys(value).length})`;
+  } else if (type === "string") {
+    return `"${value}"`;
+  } else if (type === "boolean") {
+    return value ? "true" : "false";
+  } else {
+    return value;
+  }
+}
+
 function getAutocomplete(path, key) {
   const isInteger = Number.isInteger(parseInt(key));
   const useBrackets = isInteger || !RX_PURE_KEY.test(key);
@@ -48,7 +90,14 @@ function getAutocomplete(path, key) {
   }
 }
 
-function createItem(title, subtitle, autocomplete, valid, arg, icon = "curly_brackets") {
+function createItem(
+  title,
+  subtitle,
+  autocomplete,
+  valid,
+  arg,
+  icon = "object",
+) {
   return {
     title,
     subtitle,
@@ -56,27 +105,45 @@ function createItem(title, subtitle, autocomplete, valid, arg, icon = "curly_bra
     autocomplete,
     valid,
     icon: {
-        path: `./${icon}.png`,
+      path: `./icons/${icon}.png`,
     },
   };
 }
 
 function displayValue(value, path) {
-  if (typeof value === "object") {
+  const type = getType(value);
+
+  if (type === "object" || type === "array") {
     displayKeys(value, path);
   } else {
-    const type = getType(value);
+    value = formatValue(value, type);
+
     displayItems([
-      createItem(value, type, path, true, value, "copy"),
+      createItem(
+        value,
+        `${type} - copy to clipboard`,
+        path,
+        true,
+        value,
+        "copy",
+      ),
     ]);
   }
 }
 
 function displayKeys(obj, path) {
   displayItems(
-    Object.entries(obj).map(([k, v]) =>
-      createItem(k, getType(v), getAutocomplete(path, k), false)
-    ),
+    Object.entries(obj).map(([k, v]) => {
+      const type = getType(v);
+      return createItem(
+        k,
+        getSubtitle(v, type),
+        getAutocomplete(path, k),
+        false,
+        undefined,
+        getIcon(type),
+      );
+    }),
   );
 }
 
@@ -90,7 +157,7 @@ function displayError(message) {
       {
         "title": message,
         "icon": {
-          "path": "./error.png",
+          "path": "./icons/error.png",
         },
       },
     ],
