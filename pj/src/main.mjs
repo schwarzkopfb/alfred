@@ -111,6 +111,16 @@ function createItem(
     icon: {
       path: `./icons/${icon}.png`,
     },
+
+    mods: {
+      cmd: {
+        subtitle: "Copy property path to clipboard",
+        arg: autocomplete,
+        icon: {
+          path: "./icons/copy.png",
+        }
+      }
+    }
   };
 }
 
