@@ -1,0 +1,19 @@
+{
+    "a field": "value1",
+    "another_field": {
+        "subfield1": "value2",
+        "subfield2": {
+            "apple": "value3",
+            "orange": true,
+            "grape": 123,
+            "peach": 123.456,
+            "pinapple": null
+        }
+    },
+    "some-other-field": [
+        "value4",
+        "value5"
+    ],
+    "empty_array": [],
+    "empty_object": {}
+}

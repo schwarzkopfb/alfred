@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "test": "node ./test.mjs"
+  },
   "dependencies": {
     "lodash.get": "^4.4.2",
     "lodash.topath": "^4.5.2"
