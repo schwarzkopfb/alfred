@@ -166,7 +166,7 @@
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>0.2.0</string>
+	<string>1.0.0-rc.1</string>
 	<key>webaddress</key>
 	<string>https://schwarzkopfb.codes/alfred</string>
 </dict>

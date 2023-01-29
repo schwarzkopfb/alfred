@@ -2,6 +2,7 @@
 $.verbose = false;
 
 import get from "lodash.get";
+import toPath from "lodash.topath";
 
 const RX_PURE_KEY = /^[a-z0-9_]+$/i;
 
@@ -10,15 +11,30 @@ const { stdout: clipboard } = await $`pbpaste`;
 
 try {
   const data = JSON.parse(clipboard);
-  const result = path ? get(data, path) : data;
 
-  displayValue(result, path);
+  displayValue(data, path);
 } catch (e) {
   displayError("Clipboard content is not valid JSON");
 }
 
 function isEmptyObject(obj) {
   return Object.keys(obj).length === 0;
+}
+
+function pathFromArray(parts) {
+  return parts.map((part, i) => {
+    if (Number.isInteger(parseInt(part))) {
+      return `[${part}]`;
+    } else if (RX_PURE_KEY.test(part)) {
+      return `${i > 0 ? "." : ""}${part}`;
+    } else {
+      return `["${part}"]`;
+    }
+  }).join("");
+}
+
+function normalizePath(path) {
+  return pathFromArray(toPath(path));
 }
 
 function getType(value) {
@@ -115,16 +131,40 @@ function createItem(
     mods: {
       cmd: {
         subtitle: "Copy property path to clipboard",
-        arg: autocomplete,
+        arg: normalizePath(autocomplete),
         icon: {
           path: "./icons/copy.png",
-        }
-      }
-    }
+        },
+      },
+    },
   };
 }
 
-function displayValue(value, path) {
+function displayValue(data, path) {
+  let value = path ? get(data, path) : data;
+
+  if (value === undefined) {
+    const parts = toPath(path);
+    const lastPart = parts.pop();
+
+    if (parts.length === 0) {
+      displayKeys(data, undefined, lastPart);
+      return;
+    }
+
+    const parentPath = pathFromArray(parts);
+    value = get(data, parentPath);
+    const parentType = getType(value);
+
+    if (parentType === "array" || parentType === "object") {
+      displayKeys(value, parentPath, lastPart);
+    } else {
+      displayError("No such property");
+    }
+
+    return;
+  }
+
   const type = getType(value);
 
   if (type === "object" || type === "array") {
@@ -141,7 +181,7 @@ function displayValue(value, path) {
     displayItems([
       createItem(
         value,
-        `${type} - copy to clipboard`,
+        `${type} - Copy to clipboard`,
         path,
         true,
         value,
@@ -151,19 +191,27 @@ function displayValue(value, path) {
   }
 }
 
-function displayKeys(obj, path) {
+function displayKeys(obj, path, filter = "") {
+  const entries = Object.entries(obj).filter(([k]) => k.startsWith(filter));
+
+  if (filter && entries.length === 0) {
+    displayError("No such property");
+    return;
+  }
+
   displayItems(
-    Object.entries(obj).map(([k, v]) => {
-      const type = getType(v);
-      return createItem(
-        k,
-        getSubtitle(v, type),
-        getAutocomplete(path, k),
-        false,
-        undefined,
-        getIcon(type),
-      );
-    }),
+    entries
+      .map(([k, v]) => {
+        const type = getType(v);
+        return createItem(
+          k,
+          getSubtitle(v, type),
+          getAutocomplete(path, k),
+          false,
+          undefined,
+          getIcon(type),
+        );
+      }),
   );
 }
 
@@ -202,6 +250,7 @@ function displayError(message) {
     "items": [
       {
         "title": message,
+        valid: false,
         "icon": {
           "path": "./icons/error.png",
         },
