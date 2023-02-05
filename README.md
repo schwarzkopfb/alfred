@@ -18,7 +18,7 @@ Browse git repos on your local machine and open them with your preferred app. A 
 
 ![demo](./img/repo.gif)
 
-Check out the source and `settings.json` to hack it for your specific purposes.
+Use modifier keys to open in a different app instead. Check out the source and `settings.json` to hack it for your specific purposes.
 
 ## Requirements
 * [zx](https://github.com/google/zx) installed [with homebrew](https://formulae.brew.sh/formula/zx)
