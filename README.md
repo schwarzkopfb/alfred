@@ -1,5 +1,5 @@
 # alfred
-Some of my Alfred.app custom workflows
+Some of my [Alfred](https://www.alfredapp.com/) custom workflows
 
 ## pj
 Parse and explore JSON data from clipboard without leaving Alfred
