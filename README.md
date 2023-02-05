@@ -16,7 +16,7 @@ Parse and explore JSON data from clipboard without leaving Alfred
 
 Browse git repos on your local machine and open them with your preferred app. A modern, minimalistic rewrite of [this thingy](https://github.com/deanishe/alfred-repos).
 
-![demo](./img/alfred.gif)
+![demo](./img/repo.gif)
 
 Check out the source and `settings.json` to hack it for your specific purposes.
 
