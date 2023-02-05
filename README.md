@@ -12,5 +12,13 @@ Parse and explore JSON data from clipboard without leaving Alfred
 * Arrays and Objects will be further expanded, primitive values can be copied back to the clipboard directly.
 * Hold Cmd ⌘ to copy the property path insted of the value.
 
-### Requirements
+## repo
+
+Browse git repos on your local machine and open them with your preferred app. A modern, minimalistic rewrite of [this thingy](https://github.com/deanishe/alfred-repos).
+
+![demo](./img/alfred.gif)
+
+Check out the source and `settings.json` to hack it for your specific purposes.
+
+## Requirements
 * [zx](https://github.com/google/zx) installed [with homebrew](https://formulae.brew.sh/formula/zx)
