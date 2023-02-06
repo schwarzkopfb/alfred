@@ -1,7 +1,6 @@
 # alfred
 Some of my [Alfred](https://www.alfredapp.com/) custom workflows
 
-### Requirements
 The only dependency of workflows in this repo is [zx](https://github.com/google/zx) installed [with homebrew](https://formulae.brew.sh/formula/zx).
 
 ## pj
@@ -21,6 +20,6 @@ Browse git repos on your local machine and open them with your preferred app. A 
 
 ### How doeas it work?
 * Type `repo [filter]` to search for git repositories in your [specified directories](https://schwarzkopfb.codes/alfred/blob/5d890f0a576e460a4fa5e5497b13516dadc416cf/repo/src/settings.json#L9).
-* Use modifier keys to open in a different apps. 
+* Use modifier keys to open repo in different apps.
 * Type `reposettings` to open & edit [`settings.json`](https://schwarzkopfb.codes/alfred/blob/main/repo/src/settings.json) to hack it for your specific purposes.
 * Put additional application icons to [`app_icons`](https://schwarzkopfb.codes/alfred/tree/5d890f0a576e460a4fa5e5497b13516dadc416cf/repo/src/app_icons) folder if needed.

@@ -3,7 +3,9 @@
     "base": { "name": "Visual Studio Code", "icon": "vsc.png" },
     "cmd": { "name": "Terminal", "icon": "terminal.png" },
     "alt": { "name": "Finder", "icon": "finder.png" },
-    "shift": { "name": "GitHub Desktop", "icon": "github.png" }
+    "shift": { "name": "GitHub Desktop", "icon": "github.png" },
+    "ctrl": { "name": "Arc", "icon": "arc.png" },
+    "cmd+alt": { "name": "Google Chrome", "icon": "chrome.png" }
   },
   "dirs": [
     "~/Documents/GitHub"
