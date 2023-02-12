@@ -1,4 +1,4 @@
-import { readdir } from "node:fs/promises";
+import { access, readdir } from "node:fs/promises";
 import { join } from "node:path";
 import { homedir } from "node:os";
 
@@ -19,8 +19,13 @@ export function openWithApp(path, app) {
 }
 
 async function isGitRepo(path) {
-  const { stdout } = await $`git -C ${path} rev-parse --is-inside-work-tree`;
-  return stdout.trim() === "true";
+  try {
+    await access(join(path, ".git"));
+    const { stdout } = await $`git -C ${path} rev-parse --is-inside-work-tree`;
+    return stdout.trim() === "true";
+  } catch (e) {
+    return false;
+  }
 }
 
 async function searchRepos(filter = "", dirs = []) {
